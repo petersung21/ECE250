@@ -20,7 +20,7 @@ int main() {
     testDeque->dequeue_head();
     testDeque->dequeue_tail();
     
-    if(testDeque->size() == 1)
+    if(testDeque->size() == 2)
     {
         std::cout << "Proper size" << std::endl;
     }
