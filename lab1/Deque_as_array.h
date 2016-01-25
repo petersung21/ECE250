@@ -2,9 +2,9 @@
 #define DEQUE_AS_ARRAY_H
 
 /******************************************
- * UW User ID:  uwuserid
+ * UW User ID:  phsung
  * Submitted for ECE 250
- * Semester of Submission:  (Winter|Spring|Fall) 20NN
+ * Semester of Submission:  (Winter) 2016
  *
  * By submitting this file, I affirm that
  * I am the author of all modifications to
@@ -44,7 +44,8 @@ class Deque_as_array {
 	
 };
 
- 
+
+//Constructor
 Deque_as_array::Deque_as_array( int n ):
 array_size( std::max( 1, n ) ), 
 array( new int[array_size] ), 
@@ -52,7 +53,8 @@ count( 0 ) {
 	// empty
 }
 
- 
+
+//Destructor
 Deque_as_array::~Deque_as_array() {
     count = 0;
     ihead = -1;
@@ -60,17 +62,18 @@ Deque_as_array::~Deque_as_array() {
     delete [] array;
 }
 
- 
+
+//Returns the count of number of items in deque
 int Deque_as_array::size() const {
 	return count;
 }
 
- 
+//Returns the maximum capacity of deque
 int Deque_as_array::capacity() const {
 	return array_size;
 }
 
- 
+//Returns a boolean whether deque is empty or not
 bool Deque_as_array::empty() const {
 	if (count > 0)
     {
@@ -83,6 +86,7 @@ bool Deque_as_array::empty() const {
 }
 
 
+//Returns the value in head of deque
 int Deque_as_array::head() const {
 	if (size() > 0)
     {
@@ -91,7 +95,7 @@ int Deque_as_array::head() const {
 	throw underflow();     // This returns a default object
 }
 
- 
+//Returns the value in tail of deque
 int Deque_as_array::tail() const {
     if (size() > 0)
     {
@@ -100,9 +104,10 @@ int Deque_as_array::tail() const {
 	throw underflow();     // This returns a default object
 }
 
-
+//Enqueues a value to head
 void Deque_as_array::enqueue_head( int const &obj ) {
-	if (size() == 0)
+	//If there are no previous elements in queue add to front of array and set head and tail index
+    if (size() == 0)
     {
         ihead = 0;
         itail = 0;
@@ -111,10 +116,12 @@ void Deque_as_array::enqueue_head( int const &obj ) {
     }
     else if (size() > 9)
     {
+        //Throw overflow if number of elements exceeds maximum number of allowed elements
         throw overflow();
     }
     else
     {
+        //Set the new head index as well as new value at head index
         ihead--;
         if (ihead<=-1)
         {
@@ -126,9 +133,9 @@ void Deque_as_array::enqueue_head( int const &obj ) {
     
 }
 
-
+//Enqueues a value to tail
 void Deque_as_array::enqueue_tail( int const &obj ) {
-	// enter your implementation here
+	//If there are no previous elements in queue add to front of array and set head and tail index
     if (size() == 0)
     {
         ihead = 0;
@@ -138,10 +145,12 @@ void Deque_as_array::enqueue_tail( int const &obj ) {
     }
     else if (size() > 9)
     {
+        //Throw overflow if number of elements exceeds maximum number of allowed elements
         throw overflow();
     }
     else
     {
+        //Set the new tail index as well as new value at tail index
         itail++;
         if (itail>=capacity())
         {
@@ -160,10 +169,12 @@ void Deque_as_array::enqueue_tail( int const &obj ) {
 int Deque_as_array::dequeue_head() {
     if (size() == 0)
     {
+        //Throw underflow if trying to dequeue from an empty dequeu
         throw underflow();
     }
     else
     {
+        //Deque value from head and return the value
         int returnValue = array[ihead];
         array[ihead] = 0;
         
@@ -186,10 +197,12 @@ int Deque_as_array::dequeue_head() {
 int Deque_as_array::dequeue_tail() {
 	if (size() == 0)
     {
+        //Throw underflow if trying to dequeue from an empty dequeu
         throw underflow();
     }
     else
     {
+        //Deque value from tail and return the value
         int returnValue = array[itail];
         array[itail] = 0;
         count--;
@@ -209,6 +222,7 @@ int Deque_as_array::dequeue_tail() {
 
  
 void Deque_as_array::clear() {
+    //Reset the dequeu by clearing all elements
     for (int i = 0; i<size() ;i++)
     {
         array[i] = 0;
