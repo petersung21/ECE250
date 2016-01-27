@@ -38,7 +38,7 @@ int main() {
         testDeque->enqueue_tail(89);
         testDeque->enqueue_tail(90);
     } catch (overflow ex){
-        std::cout << "Proper underflow error thrown" << std::endl;
+        std::cout << "Proper overflow error thrown" << std::endl;
     }
     
     testDeque->dequeue_head();
