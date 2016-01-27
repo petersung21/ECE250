@@ -1,7 +1,8 @@
 //
 //  Test_deque_as_array.cpp
 //  ece250
-//
+//  studentID: 20576785
+//  uwID: phsung
 //  Created by Peter Hyungrok Sung on 2016-01-25.
 //  Copyright (c) 2016 Peter Hyungrok Sung. All rights reserved.
 //

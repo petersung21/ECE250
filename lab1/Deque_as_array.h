@@ -45,7 +45,7 @@ class Deque_as_array {
 };
 
 
-//Constructor
+//Constructor takes in n as parameter which is the capacity of the deque
 Deque_as_array::Deque_as_array( int n ):
 array_size( std::max( 1, n ) ), 
 array( new int[array_size] ), 
@@ -104,7 +104,7 @@ int Deque_as_array::tail() const {
 	throw underflow();     // This returns a default object
 }
 
-//Enqueues a value to head
+//Enqueues a value to head. The value is passed as a parameter. Throw overflow if number of elements exceeds maximum number of allowed elements
 void Deque_as_array::enqueue_head( int const &obj ) {
 	//If there are no previous elements in queue add to front of array and set head and tail index
     if (size() == 0)
@@ -116,7 +116,7 @@ void Deque_as_array::enqueue_head( int const &obj ) {
     }
     else if (size() > 9)
     {
-        //Throw overflow if number of elements exceeds maximum number of allowed elements
+        
         throw overflow();
     }
     else
@@ -133,7 +133,7 @@ void Deque_as_array::enqueue_head( int const &obj ) {
     
 }
 
-//Enqueues a value to tail
+//Enqueues a value to tail. The value is passed as a parameter. Throw overflow if number of elements exceeds maximum number of allowed elements
 void Deque_as_array::enqueue_tail( int const &obj ) {
 	//If there are no previous elements in queue add to front of array and set head and tail index
     if (size() == 0)
@@ -165,16 +165,15 @@ void Deque_as_array::enqueue_tail( int const &obj ) {
     
 }
 
- 
+//Deque value from head and return the value. Throw underflow if trying to dequeue from an empty deque
 int Deque_as_array::dequeue_head() {
     if (size() == 0)
     {
-        //Throw underflow if trying to dequeue from an empty dequeu
         throw underflow();
     }
     else
     {
-        //Deque value from head and return the value
+        
         int returnValue = array[ihead];
         array[ihead] = 0;
         
@@ -193,16 +192,14 @@ int Deque_as_array::dequeue_head() {
     return 0;
 }
 
- 
+//Deque value from tail and return the value. Throw underflow if trying to dequeue from an empty deque 
 int Deque_as_array::dequeue_tail() {
 	if (size() == 0)
     {
-        //Throw underflow if trying to dequeue from an empty dequeu
         throw underflow();
     }
     else
     {
-        //Deque value from tail and return the value
         int returnValue = array[itail];
         array[itail] = 0;
         count--;
@@ -221,8 +218,8 @@ int Deque_as_array::dequeue_tail() {
 }
 
  
+//Reset the dequeu by clearing all elements
 void Deque_as_array::clear() {
-    //Reset the dequeu by clearing all elements
     for (int i = 0; i<size() ;i++)
     {
         array[i] = 0;
