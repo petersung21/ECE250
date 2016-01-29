@@ -114,7 +114,7 @@ void Deque_as_array::enqueue_head( int const &obj ) {
         array[0] = obj;
         count++;
     }
-    else if (size() > capacity-1)
+    else if (size() > capacity()-1)
     {
         //Throw overflow if number of elements exceeds maximum number of allowed elements
         throw overflow();
@@ -143,7 +143,7 @@ void Deque_as_array::enqueue_tail( int const &obj ) {
         array[0] = obj;
         count++;
     }
-    else if (size() > capacity-1)
+    else if (size() > capacity()-1)
     {
         //Throw overflow if number of elements exceeds maximum number of allowed elements
         throw overflow();
