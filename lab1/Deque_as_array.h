@@ -92,7 +92,7 @@ int Deque_as_array::head() const {
     {
         return array[ihead];
     }
-	return 0;     // This returns a default object
+	return underflow();     // This returns a default object
 }
 
 //Returns the value in tail of deque
@@ -101,7 +101,7 @@ int Deque_as_array::tail() const {
     {
         return array[itail];
     }
-	return 0;     // This returns a default object
+	return underflow();     // This returns a default object
 }
 
 //Enqueues a value to head
