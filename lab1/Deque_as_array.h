@@ -92,7 +92,7 @@ int Deque_as_array::head() const {
     {
         return array[ihead];
     }
-	throw underflow();     // This returns a default object
+	return 0;     // This returns a default object
 }
 
 //Returns the value in tail of deque
@@ -101,7 +101,7 @@ int Deque_as_array::tail() const {
     {
         return array[itail];
     }
-	throw underflow();     // This returns a default object
+	return 0;     // This returns a default object
 }
 
 //Enqueues a value to head
@@ -114,7 +114,7 @@ void Deque_as_array::enqueue_head( int const &obj ) {
         array[0] = obj;
         count++;
     }
-    else if (size() > 9)
+    else if (size() > capacity-1)
     {
         //Throw overflow if number of elements exceeds maximum number of allowed elements
         throw overflow();
@@ -143,7 +143,7 @@ void Deque_as_array::enqueue_tail( int const &obj ) {
         array[0] = obj;
         count++;
     }
-    else if (size() > 9)
+    else if (size() > capacity-1)
     {
         //Throw overflow if number of elements exceeds maximum number of allowed elements
         throw overflow();
