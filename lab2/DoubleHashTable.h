@@ -44,6 +44,7 @@ public:
     void clear();
 };
 
+//Constructor
 template<typename T >
 DoubleHashTable<T >::DoubleHashTable( int m ):
 count( 0 ), power( m ),
@@ -56,6 +57,7 @@ array_state( new state[array_size] ) {
     }
 }
 
+//Destructor
 template<typename T >
 DoubleHashTable<T >::~DoubleHashTable() {
     count = 0;
@@ -65,18 +67,21 @@ DoubleHashTable<T >::~DoubleHashTable() {
     delete [] array_state;
 }
 
+
+//Returns the count of elements in hashtable
 template<typename T >
 int DoubleHashTable<T >::size() const {
     return count;
 }
 
+//Returns the capacity of the hashtable
 template<typename T >
 int DoubleHashTable<T >::capacity() const {
     return array_size;
 }
 
 
-
+//Returns a boolean whether hashmap is empty or not
 template<typename T >
 bool DoubleHashTable<T >::empty() const {
     if (size() > 0)
@@ -89,6 +94,8 @@ bool DoubleHashTable<T >::empty() const {
     }
 }
 
+//First hashing function. Obj is the value you wish to put in hashmap. 
+//This value divded by array size and applying the module of M. Made positive by adding  M if necessary. 
 template<typename T >
 int DoubleHashTable<T >::h1( T const &obj ) const {
     int arrayIndex = static_cast<int>(obj) % array_size;
@@ -101,12 +108,15 @@ int DoubleHashTable<T >::h1( T const &obj ) const {
     return arrayIndex;
 }
 
+//Second hashing function or the step function. Obj is the value you wish to put in hashmap. 
+//This value divded by array size and applying the module of M. Made positive by adding  M if necessary. 
+//Add 1 if value is even to make it positive
 template<typename T >
 int DoubleHashTable<T >::h2( T const &obj ) const {
     int jumpValue = (static_cast<int>(obj)/array_size) % array_size;
     if (jumpValue < 0)
     {
-        jumpValue = jumpValue + jumpValue;
+        jumpValue = jumpValue + array_size;
     }
     if (jumpValue % 2 == 0)
     {
@@ -115,6 +125,7 @@ int DoubleHashTable<T >::h2( T const &obj ) const {
     return jumpValue;
 }
 
+//Return true if object obj is in the hash table and false otherwise. Takes in obj as parameter to find that value in hashtable
 template<typename T >
 bool DoubleHashTable<T >::member( T const &obj ) const {
     int jumpValue = h2(obj);
@@ -134,6 +145,8 @@ bool DoubleHashTable<T >::member( T const &obj ) const {
     return false;
 }
 
+//Return the entry in bin n. Takes in obj as parameter to find that value in hashtable.
+//Throws out of bounds exception if n is greater than capacity
 template<typename T >
 T DoubleHashTable<T >::bin( int n ) const {
     // enter your implemetation here
@@ -148,6 +161,8 @@ T DoubleHashTable<T >::bin( int n ) const {
     return T();
 }
 
+// Insert the new object into the hash table in the appropriate bin based on hash functions and step counter if space is full.
+// If the table is full, throw an overflow exception. Takes in obj as parameter (can be int or double)
 template<typename T >
 void DoubleHashTable<T >::insert( T const &obj ) {
     //Error Handling
@@ -169,6 +184,8 @@ void DoubleHashTable<T >::insert( T const &obj ) {
     count++;
 }
 
+//Remove the object from the hash table if it is in the hash table (returning false if it is not) by setting the corresponding flag of the bin to deleted.
+//Takes in obj as parameter (can be int or double)
 template<typename T >
 bool DoubleHashTable<T >::remove( T const &obj ) {
     //Error Handling
@@ -195,6 +212,7 @@ bool DoubleHashTable<T >::remove( T const &obj ) {
     return false;
 }
 
+//Remove all the elements in the hash table.
 template<typename T >
 void DoubleHashTable<T >::clear() {
     for ( int i = 0; i < array_size; ++i ) {
@@ -206,10 +224,24 @@ void DoubleHashTable<T >::clear() {
     return; 
 }
 
+//Prints the class status
 template<typename T >
 void DoubleHashTable<T >::print() const {
-    std::cout << "What am I supposed to print here lol" << std::endl;
-    return;
+    std::cout << "size: " << size() << std::endl;
+    
+    std::cout << "capacity: " << capacity() << std::endl;
+    
+    
+    
+    for (int i = 0; i < array_size ; i++) {
+        
+        std::cout << i << " " << array[i] << " " << array_state[i] << std::endl;
+        
+    }
+    
+    
+    
+    return ;
 }
 
 #endif
