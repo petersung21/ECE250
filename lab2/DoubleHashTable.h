@@ -170,6 +170,10 @@ void DoubleHashTable<T >::insert( T const &obj ) {
     {
         throw overflow();
     }
+    if (member(obj))
+    {
+        return;
+    }
     
     int jumpValue = h2(obj);
     int arrayIndex = h1(obj);
