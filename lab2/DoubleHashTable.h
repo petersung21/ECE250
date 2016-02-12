@@ -94,8 +94,8 @@ bool DoubleHashTable<T >::empty() const {
     }
 }
 
-//First hashing function. Obj is the value you wish to put in hashmap. 
-//This value divded by array size and applying the module of M. Made positive by adding  M if necessary. 
+//First hashing function. Obj is the value you wish to put in hashmap.
+//This value divded by array size and applying the module of M. Made positive by adding  M if necessary.
 template<typename T >
 int DoubleHashTable<T >::h1( T const &obj ) const {
     int arrayIndex = static_cast<int>(obj) % array_size;
@@ -108,8 +108,8 @@ int DoubleHashTable<T >::h1( T const &obj ) const {
     return arrayIndex;
 }
 
-//Second hashing function or the step function. Obj is the value you wish to put in hashmap. 
-//This value divded by array size and applying the module of M. Made positive by adding  M if necessary. 
+//Second hashing function or the step function. Obj is the value you wish to put in hashmap.
+//This value divded by array size and applying the module of M. Made positive by adding  M if necessary.
 //Add 1 if value is even to make it positive
 template<typename T >
 int DoubleHashTable<T >::h2( T const &obj ) const {
@@ -130,6 +130,7 @@ template<typename T >
 bool DoubleHashTable<T >::member( T const &obj ) const {
     int jumpValue = h2(obj);
     int arrayIndex = h1(obj);
+    int counter = 0;
     
     while(array_state[arrayIndex] == OCCUPIED || array_state[arrayIndex] == DELETED)
     {
@@ -139,6 +140,12 @@ bool DoubleHashTable<T >::member( T const &obj ) const {
         }
         arrayIndex = arrayIndex + jumpValue;
         arrayIndex = arrayIndex % array_size;
+        counter++;
+        //Prevent Infinte loop
+        if (counter >= capacity())
+        {
+            break;
+        }
     }
     
     
@@ -174,7 +181,7 @@ void DoubleHashTable<T >::insert( T const &obj ) {
     {
         return;
     }
-    
+    int counter = 0;
     int jumpValue = h2(obj);
     int arrayIndex = h1(obj);
     
@@ -192,14 +199,10 @@ void DoubleHashTable<T >::insert( T const &obj ) {
 //Takes in obj as parameter (can be int or double)
 template<typename T >
 bool DoubleHashTable<T >::remove( T const &obj ) {
-    //Error Handling
-    if (size() == 0)
-    {
-        throw underflow();
-    }
     
     int jumpValue = h2(obj);
     int arrayIndex = h1(obj);
+    int counter = 0;
     
     while(array_state[arrayIndex] == OCCUPIED || array_state[arrayIndex] == DELETED)
     {
@@ -210,8 +213,14 @@ bool DoubleHashTable<T >::remove( T const &obj ) {
             count--;
             return true;
         }
+        counter++;
         arrayIndex = arrayIndex + jumpValue;
         arrayIndex = arrayIndex % array_size;
+        //Prevent Infinite Loop
+        if (counter >= capacity())
+        {
+            break;
+        }
     }
     return false;
 }
@@ -225,7 +234,7 @@ void DoubleHashTable<T >::clear() {
     }
     count = 0;
     
-    return; 
+    return;
 }
 
 //Prints the class status
