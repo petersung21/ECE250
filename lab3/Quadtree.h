@@ -74,8 +74,7 @@ count( 0 ) {
 //Destructor of Quadtree. Sets count to 0 and deletes the tree root
 template <typename T>
 Quadtree<T>::~Quadtree() {
-    count = 0;
-    delete tree_root;
+    tree_root->clear();
 }
 
 //Returns the count of the quadtree
@@ -167,8 +166,7 @@ Quadtree_node<T> *Quadtree<T>::root() const {
     return tree_root;
 }
 
-//Returns true if the pair (x,y) is stored in one of the nodes of the Quadtree and false otherwise. 
-//Parameters are the x and y values of node you are trying to find.
+//Returns true if the pair (x,y) is stored in one of the nodes of the Quadtree and false otherwise. Parameters are the x and y values of node you are trying to find.
 template <typename T>
 bool Quadtree<T>::member( T const &x, T const &y ) const {
     if (empty())
@@ -180,8 +178,7 @@ bool Quadtree<T>::member( T const &x, T const &y ) const {
 }
 
 
-//Inserts the pair (x, y) into the Quadtree. If the root is 0, a new quadtree node is created; otherwise, 
-//the task of insertion is passed to the root node. Parameters are the x and y values of node you are trying to find.
+//Inserts the pair (x, y) into the Quadtree. If the root is 0, a new quadtree node is created; otherwise, the task of insertion is passed to the root node. Parameters are the x and y values of node you are trying to find.
 template <typename T>
 void Quadtree<T>::insert( T const &x, T const &y ) {
     if (empty())
@@ -202,7 +199,7 @@ template <typename T>
 void Quadtree<T>::clear() {
     tree_root->clear();
     count = 0;
-    tree_root = new Quadtree_node<T>(0);
+    tree_root = 0;
 }
 
 #endif

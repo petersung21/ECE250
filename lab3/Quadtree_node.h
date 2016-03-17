@@ -73,13 +73,9 @@ south_east( 0 ) {
 }
 
 
-//Destructor that recursively deletes all nodes
+//Destructor
 template <typename T>
 Quadtree_node<T>::~Quadtree_node(){
-    delete north_west;
-    delete north_east;
-    delete south_east;
-    delete south_west;
 }
 
 
@@ -123,7 +119,7 @@ Quadtree_node<T> *Quadtree_node<T>::se() const {
 //Return the minimum x value within the quadtree by recursively calling min_x function on the north west and south west nodes
 template <typename T>
 T Quadtree_node<T>::min_x() const {
-    int min = retrieve_x();
+    T min = retrieve_x();
     if (north_west != 0)
     {
         min = std::min(min, nw()->min_x());
@@ -139,7 +135,7 @@ T Quadtree_node<T>::min_x() const {
 //Return the minimum y value within the quadtree by recursively calling min_y function on the south east and south west nodes
 template <typename T>
 T Quadtree_node<T>::min_y() const {
-    int min = retrieve_y();
+    T min = retrieve_y();
     if (south_east != 0)
     {
         min = std::min(min, se()->min_y());
@@ -156,7 +152,7 @@ T Quadtree_node<T>::min_y() const {
 //Return the maximum x value within the quadtree by recursively calling max_x function on the north east and south east nodes
 template <typename T>
 T Quadtree_node<T>::max_x() const {
-    int max = retrieve_x();
+    T max = retrieve_x();
     if (north_east != 0)
     {
         max = std::max(max, ne()->max_x());
@@ -173,7 +169,7 @@ T Quadtree_node<T>::max_x() const {
 //Return the maximum y value within the quadtree by recursively calling max_y function on the north east and north west nodes
 template <typename T>
 T Quadtree_node<T>::max_y() const {
-    int max = retrieve_y();
+    T max = retrieve_y();
     if (north_east != 0)
     {
         max = std::max(max, ne()->max_y());
@@ -189,7 +185,7 @@ T Quadtree_node<T>::max_y() const {
 //Calculates the sum of all x values in the tree by recursively calling all nodes in the tree
 template <typename T>
 T Quadtree_node<T>::sum_x() const {
-    int sum = 0;
+    T sum = 0;
     if ( retrieve_x() == 0 ) {
 		return 0;
 	} else {
@@ -218,7 +214,7 @@ T Quadtree_node<T>::sum_x() const {
 //Calculates the sum of all y values in the tree by recursively calling all nodes in the tree
 template <typename T>
 T Quadtree_node<T>::sum_y() const {
-    int sum = 0;
+    T sum = 0;
     if ( retrieve_y() == 0 ) {
         return 0;
     } else {
@@ -244,8 +240,7 @@ T Quadtree_node<T>::sum_y() const {
     }
 }
 
-//Returns true if the pair (x,y) is stored in the current node, or in the Quadtree starting at the current node.
-//Done by recursively calling the member function based on the comparison of x's and y's. Parameters are the x and y values of node you are trying to find.
+//Returns true if the pair (x,y) is stored in the current node, or in the Quadtree starting at the current node. Done by recursively calling the member function based on the comparison of x's and y's. Parameters are the x and y values of node you are trying to find.
 template <typename T>
 bool Quadtree_node<T>::member( T const &x, T const &y ) const {
 	if ( this == 0 ) {
@@ -268,9 +263,7 @@ bool Quadtree_node<T>::member( T const &x, T const &y ) const {
 }
 
 
-//If the pair (x,y) equals the pair stored in the current node, return false; 
-//otherwise, insert the pair into the appropriate sub-tree either by creating a new node and returning true or recursively calling insert
-// and returning that call's return value. Parameters are the x and y values of node you are trying to insert.
+//If the pair (x,y) equals the pair stored in the current node, return false; otherwise, insert the pair into the appropriate sub-tree either by creating a new node and returning true or recursively calling insert and returning that call's return value. Parameters are the x and y values of node you are trying to insert.
 template <typename T>
 bool Quadtree_node<T>::insert( T const &x, T const &y ) {
     if ( this == 0 )
@@ -320,8 +313,6 @@ bool Quadtree_node<T>::insert( T const &x, T const &y ) {
 template <typename T>
 void Quadtree_node<T>::clear() {
     if ( this != 0 ) {
-        x_value = 0;
-        y_value = 0;
         
         if (ne() != 0){
             ne()->clear();
@@ -335,6 +326,8 @@ void Quadtree_node<T>::clear() {
         if (se() != 0) {
             se()->clear();
         }
+        
+        delete this;
     }
 }
 
