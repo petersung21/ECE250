@@ -16,8 +16,8 @@
  ****************************************/
 
 class Weighted_graph {
-	private:
-		static const double INF;
+    private:
+        static const double INF;
         int numberofEdges;
         int sizeofGraph;
         double **graph_matrix;
@@ -48,20 +48,20 @@ class Weighted_graph {
         void insertHeap(double weight, int vertex);
     
 
-	public:
-		Weighted_graph( int = 50 );
-		~Weighted_graph();
+    public:
+        Weighted_graph( int = 50 );
+        ~Weighted_graph();
 
-		int degree( int ) const;
-		int edge_count() const;
-		double adjacent( int, int ) const;
-		double minimum_spanning_tree( int );
-		bool is_connected();
+        int degree( int ) const;
+        int edge_count() const;
+        double adjacent( int, int ) const;
+        double minimum_spanning_tree( int );
+        bool is_connected();
 
-		void insert( int, int, double );
+        void insert( int, int, double );
 
 
-	friend std::ostream &operator << ( std::ostream &, Weighted_graph const & );
+    friend std::ostream &operator << ( std::ostream &, Weighted_graph const & );
 };
 
 //Construct a weighted undirected graph with n vertices. Throw illegal_argument exception if the argument is less than 0.
@@ -80,7 +80,7 @@ Weighted_graph::Weighted_graph(int n)
     graph_matrix = new double*[n];
     for (int i = 0; i < n ; i++)
     {
-        graph_matrix[i] = new double[n];
+        graph_matrix[i] = new double[n]();
     }
 }
 
@@ -330,13 +330,13 @@ void Weighted_graph::insert(int m, int n, double w)
     {
         throw illegal_argument();
     }
-    if (w == 0)
+    if (w == 0 && graph_matrix[m][n] != 0 && graph_matrix[n][m] != 0)
     {
         degreeofVertices[m] = degreeofVertices[m] - 1;
         degreeofVertices[n] = degreeofVertices[n] - 1;
         numberofEdges--;
     }
-    else if (graph_matrix[m][n] == 0 || graph_matrix[n][m] == 0)
+    else if (w!= 0 && graph_matrix[m][n] == 0 && graph_matrix[n][m] == 0)
     {
         degreeofVertices[m] = degreeofVertices[m] + 1;
         degreeofVertices[n] = degreeofVertices[n] + 1;
@@ -353,7 +353,7 @@ void Weighted_graph::insert(int m, int n, double w)
 
 std::ostream &operator << ( std::ostream &out, Weighted_graph const &graph ) {
 
-	return out;
+    return out;
 }
 
 #endif
